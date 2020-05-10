@@ -13,17 +13,30 @@ const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`
 
+  console.log('process.env.NODE_ENV', process.env.NODE_ENV)
+
+const DEV = process.env.NODE_ENV === 'development';
+
 function createWindow () {
   /**
    * Initial window options
    */
   mainWindow = new BrowserWindow({
     height: 563,
+    width: DEV ? 1000 : 380,
     useContentSize: true,
-    width: 1000
+    maximizable: false,
+    resizable: false,
+    webPreferences: {
+      nodeIntegration: true
+    }
   })
 
+  mainWindow.setMenu(null)
   mainWindow.loadURL(winURL)
+  if(DEV){
+    mainWindow.openDevTools()
+  }
 
   mainWindow.on('closed', () => {
     mainWindow = null
