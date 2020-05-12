@@ -24,6 +24,10 @@ export default class AdbDevice{
         })
     }
 
+    launch(link){
+        return this.shell('am start -a android.intent.action.VIEW -d ' + link);
+    }
+
     async waitNodeAndTapIt(filters){
         const node = await this.waitNodeAndGetIt(filters);
         const rect = UITree.getNodeClientRect(node);

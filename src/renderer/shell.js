@@ -1,6 +1,5 @@
-import services from './services';
+import { vscoSession } from './services';
 import { sleep } from './utils';
-const { vscoSession } = services;
 
 export default class Shell{
 

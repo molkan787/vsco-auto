@@ -13,20 +13,28 @@ function __botter_init(){
         const els = document.querySelectorAll(selector);
         for(let i = start; i < els.length; i++){
             const el = els[i];
-            const html = el.outerHTML;
-            const ref = genRef();
-            state.els[ref] = el;
-            result.push({
-                html,
-                ref
-            });
+            result.push(this.prepareElement(el));
         }
         return result;
     }
 
     this.callElementMethod = function (ref, method){
         const el = state.els[ref];
-        el[method]();
+        if(method === 'parentNode'){
+            return this.prepareElement(el.parentNode);
+        }else{
+            el[method]();
+        }
+    }
+
+    this.prepareElement = function (el){
+        const html = el.outerHTML;
+        const ref = genRef();
+        state.els[ref] = el;
+        return {
+            html,
+            ref
+        };
     }
 
 }

@@ -109,11 +109,17 @@ export default class Botter{
         const result = [];
         const els = await this.exec(`__botter.querySelectorAll('${selector}', ${offset})`);
         for(let el of els){
-            const _el = this._parseHTMLElement(el.html)
-            _el.click = () => this.callElementMethod(el.ref, 'click');
+            const _el = this.buildElement(el);
             result.push(_el);
         }
         return result;
+    }
+
+    buildElement(data){
+        const el = this._parseHTMLElement(data.html);
+        el.click = () => this.callElementMethod(data.ref, 'click');
+        el.getParentNode = async () => this.buildElement(await this.callElementMethod(data.ref, 'parentNode'));
+        return el;
     }
 
     async scrollToElement(selector, index){

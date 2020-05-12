@@ -1,8 +1,8 @@
-const sqlite3 = req('sqlite3');
+const sqlite3 = require('sqlite3');
 const SEPARATOR_DEFAULT = ', ';
 const SEPARATOR_AND = ' AND ';
 
-module.exports = class Database{
+export default class Database{
 
     open(filename){
         return new Promise((resolve, reject) => {

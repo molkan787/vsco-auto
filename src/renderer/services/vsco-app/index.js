@@ -9,6 +9,9 @@ export default class VscoApp extends WithEvents{
         this.client = new AdbDevice();
         this.messageSender = new MessageSender(this.client);
         this.device = null;
+    }
+
+    start(){
         this.loadDevice();
     }
 
@@ -17,7 +20,7 @@ export default class VscoApp extends WithEvents{
     }
 
     async loadDevice(){
-        const devices = await this.client.listDevices();
+        const devices = await this.client.listDevices().filter(device => device.type == 'device');
         const device = devices[0];
         if(device){
             this.client.use(device);
@@ -27,8 +30,8 @@ export default class VscoApp extends WithEvents{
             this.device = null;
             this.$emit('deviceChanged', null);
         }
-        // Update status every 2 minutes
-        setTimeout(() => this.loadDevice(), 2 * 60 * 1000);
+        // Update status every 1 minutes
+        setTimeout(() => this.loadDevice(), 60 * 1000);
     }
 
 }

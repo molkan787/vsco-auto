@@ -61,12 +61,27 @@ export default class VscoFollower{
         for(let btn of btns){
             if(progress.isFinished) break;
             if(textCompare(btn.innerText, VS.TEXT_FOLLOW_BTN)){
-                await btn.click()
+                await btn.click();
                 progress.report(1, 0);
+                const username = await this.getAssociatedUsername(btn);
+                if(username) progress.addData(username);
                 await this.randomSleep(interval);
             }
         }
         return btns.length;
+    }
+
+    async getAssociatedUsername(btn){
+        try {
+            const parent = await (await btn.getParentNode()).getParentNode()
+            const href = parent.querySelector('a').href;
+            const parts = href.split('/');
+            const username = parts[parts.length - 1];
+            return username;
+        } catch (error) {
+            console.error(error);
+            return null;
+        }
     }
 
     async checkSession(bot){

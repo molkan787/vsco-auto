@@ -10,25 +10,32 @@ export default class MessageSender{
     async send(recipient, message){
         const client = this.client;
 
+        const isDeepLink = recipient.startsWith('vsco://');
+
         await client.wakeUp();
         await sleep(2000);
 
-        await client.launchActivity(VSC.ACTIVITY_NAME);
-        await sleep(5000);
-    
-        await client.waitNodeAndTapIt(VSC.FILTER_BOTNAV_DISCOVER);
-        await sleep(2000);
-    
-        await client.waitNodeAndTapIt(VSC.FILTER_HEADER_SEARCH_BTN);
-        await sleep(2000);
-    
-        await client.waitNodeAndTapIt(VSC.FILTER_SEARCH_BOX);
-        await sleep(1000);
-        await client.writeText(recipient);
-        await sleep(1000);
+        if(isDeepLink){
+            await client.launch(recipient);
+            await sleep(5000);  
+        }else{
+            await client.launchActivity(VSC.ACTIVITY_NAME);
+            await sleep(5000);
         
-        await client.waitNodeAndTapIt(VSC.FILTER_USER_ROW);
-        await sleep(1000);
+            await client.waitNodeAndTapIt(VSC.FILTER_BOTNAV_DISCOVER);
+            await sleep(2000);
+        
+            await client.waitNodeAndTapIt(VSC.FILTER_HEADER_SEARCH_BTN);
+            await sleep(2000);
+        
+            await client.waitNodeAndTapIt(VSC.FILTER_SEARCH_BOX);
+            await sleep(1000);
+            await client.writeText(recipient);
+            await sleep(1000);
+            
+            await client.waitNodeAndTapIt(VSC.FILTER_USER_ROW);
+            await sleep(1000);  
+        }
         
         await client.waitNodeAndTapIt(VSC.FILTER_MESSAGE_BTN);
         await sleep(1000);

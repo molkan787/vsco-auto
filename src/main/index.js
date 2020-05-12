@@ -22,13 +22,14 @@ function createWindow () {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    height: 563,
-    width: DEV ? 1000 : 380,
+    height: 620,
+    width: DEV ? 1000 : 410,
     useContentSize: true,
     maximizable: false,
     resizable: false,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      webSecurity: false,
     }
   })
 
@@ -39,6 +40,7 @@ function createWindow () {
   }
 
   mainWindow.on('closed', () => {
+    app.quit()
     mainWindow = null
   })
 }

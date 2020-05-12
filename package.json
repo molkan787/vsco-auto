@@ -1,6 +1,6 @@
 {
   "name": "vsco-auto",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "An electron-vue project",
   "author": "Dahmane Seghier <contact@dahmane.pl>",
   "scripts": {
@@ -8,6 +8,7 @@
     "build:clean": "cross-env BUILD_TARGET=clean node .electron-vue/build.js",
     "build:dir": "node .electron-vue/build.js && electron-builder --dir",
     "build:web": "cross-env BUILD_TARGET=web node .electron-vue/build.js",
+    "rebuild": "electron-rebuild -f -w sqlite3",
     "dev": "node .electron-vue/dev-runner.js",
     "pack": "npm run pack:main && npm run pack:renderer",
     "pack:main": "cross-env NODE_ENV=production webpack --progress --colors --config .electron-vue/webpack.main.config.js",
@@ -24,6 +25,9 @@
     "babel-plugin-transform-runtime": "^6.23.0",
     "fast-xml-parser": "^3.16.0",
     "memorystream": "^0.3.1",
+    "querystring": "^0.2.0",
+    "sqlite3": "^4.2.0",
+    "unzipper": "^0.10.11",
     "vue": "2.6.10",
     "vue-electron": "^1.0.6",
     "vue-template-compiler": "2.6.10",
@@ -55,6 +59,7 @@
     "electron-builder": "^20.19.2",
     "electron-debug": "^1.5.0",
     "electron-devtools-installer": "^2.2.4",
+    "electron-rebuild": "^1.10.1",
     "file-loader": "^1.1.11",
     "html-webpack-plugin": "^3.2.0",
     "inject-loader": "^4.0.1",
@@ -87,7 +92,7 @@
     "webpack-merge": "^4.1.3"
   },
   "build": {
-    "productName": "vsco-auto",
+    "productName": "VSCO Auto",
     "appId": "pl.dahmane.vscoauto",
     "directories": {
       "output": "build"
